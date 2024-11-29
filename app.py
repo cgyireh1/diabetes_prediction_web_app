@@ -3,7 +3,7 @@ import joblib
 import pandas as pd
 import numpy as np
 from sklearn.preprocessing import LabelEncoder
-from src.prediction import Prediction  # Assuming the 'Prediction' class is in src/prediction.py
+from src.prediction import DataPrediction
 
 app = Flask(__name__)
 
@@ -18,7 +18,7 @@ prediction = PredictionData(model_path=model_path, scaler_path=scaler_path, enco
 @app.route('/')
 def index():
     # Render homepage with visualizations
-    return render_pages('index.html')
+    return render_template('index.html')
 
 @app.route('/predict', methods=['GET', 'POST'])
 def predict():
