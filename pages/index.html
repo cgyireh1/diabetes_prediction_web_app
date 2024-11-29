@@ -3,50 +3,103 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Diabetes Prediction</title>
+    <title>Homepage - Diabetes Prediction</title>
     <link rel="stylesheet" href="/static/styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
 </head>
 <body>
-    <header>
-        <nav>
-            <h1>Diabetes Prediction Web App</h1>
-            <ul>
+    <!-- Navbar Section -->
+    <nav id="navbar" class="navbar">
+        <div class="container">
+            <a href="/" class="navbar-brand">Diabetes Prediction</a>
+            <ul class="navbar-links">
                 <li><a href="/pages/index.html">Home</a></li>
                 <li><a href="/pages/predict.html">Make Prediction</a></li>
                 <li><a href="/pages/upload.html">Upload Data</a></li>
                 <li><a href="/pages/retrain.html">Retrain Model</a></li>
             </ul>
-        </nav>
-    </header>
-
-    <section class="home-content">
-        <h2>Welcome to the Diabetes Prediction Web App!</h2>
-        <p>Here, you can make predictions, upload new data for retraining the model, and visualize data.</p>
-        
-        <div class="features">
-            <div class="feature-card">
-                <h3>Make Prediction</h3>
-                <p>Enter your details to get a prediction on whether you're at risk for diabetes.</p>
-                <a href="/predict">Go to Prediction</a>
-            </div>
-            <div class="feature-card">
-                <h3>Upload Data</h3>
-                <p>Upload new data to retrain the model and improve predictions.</p>
-                <a href="/upload">Go to Upload</a>
-            </div>
-            <div class="feature-card">
-                <h3>Retrain Model</h3>
-                <p>Trigger a retraining of the model using the latest data.</p>
-                <a href="/retrain">Go to Retrain</a>
-            </div>
         </div>
+    </nav>
 
-        <h2>Data Visualizations</h2>
-        <!-- Visualizations like charts can go here, using Plotly, etc. -->
+    <!-- Hero Section -->
+    <section id="hero" class="hero-section">
+    </section>
+
+    <section id="about" class="about-section">
+        <div class="container">
+            <h2>About Our Tool</h2>
+            <p>Our Diabetes Prediction Tool uses advanced machine learning algorithms to predict your risk of developing diabetes. By entering key health information, you can receive a personalized risk assessment that empowers you to make informed health decisions. This tool is designed with privacy and security in mind, so you can trust that your data is handled with the utmost care.</p>
+            <a href="/predict" class="cta-button">Make a Prediction</a>
+        </div>
     </section>
     
-    <footer>
-        <p>&copy; 2024 Diabetes Prediction App</p>
-    </footer>
+    
+    <!-- Features Section -->
+    <section id="features" class="features-section">
+        <div class="container">
+            <h2>Why Choose Our Prediction Tool?</h2>
+            <div class="feature">
+                <img src="/pages/images/diabetic-kit.webp" alt="Accurate Predictions">
+                <h3>Accurate Predictions</h3>
+                <p>Our model provides precise diabetes predictions based on real health data.</p>
+            </div>
+            <div class="feature">
+                <img src="/pages/images/diabetic-kit.webp" alt="Easy to Use">
+                <h3>Easy to Use</h3>
+                <p>Simply input your data and receive a clear, actionable prediction instantly.</p>
+            </div>
+            <div class="feature">
+                <img src="/pages/images/diabetic-kit.webp" alt="Secure Data">
+                <h3>Secure Data</h3>
+                <p>Your privacy is our priority. Your data is processed securely and never shared.</p>
+            </div>
+        </div>
+    </section>
+    
+    <footer id="footer" class="footer-section">
+        <!-- Footer Branding Section -->
+        <div class="footer-branding">
+            <h2>Diabetes Prediction</h2>
+            <p>Your reliable tool for diabetes risk prediction</p>
+        </div>
+        
+        <!-- Footer Navigation Section -->
+        <div class="footer-navigation">
+            <a href="/pages/index.html" class="footer-link">Home</a>
+            <a href="/pages/predict.html" class="footer-link">Make a Prediction</a>
+            <a href="/pages/upload.html" class="footer-link">Upload Data</a>
+            <a href="/pages/retrain.html" class="footer-link">Retrain Model</a>
+        </div>
+        
+        <!-- Footer Contact Section -->
+        <div class="footer-contact">
+            <a href="mailto:support@db-pred.com" class="footer-contact-link">
+                <i class="fas fa-envelope"></i> support@db-pred.com
+            </a>
+            <a href="tel:+1234567890" class="footer-contact-link">
+                <i class="fas fa-phone-alt"></i> +1 234 567 890
+            </a>
+        </div>
+        
+        <!-- Footer Social Links Section -->
+        <div class="footer-social-links">
+            <a href="https://www.linkedin.com" target="_blank" class="social-link">
+                <i class="fab fa-linkedin-in"></i>
+            </a>
+            <a href="https://www.twitter.com" target="_blank" class="social-link">
+                <i class="fab fa-twitter"></i>
+            </a>
+            <a href="https://www.instagram.com" target="_blank" class="social-link">
+                <i class="fab fa-instagram"></i>
+            </a>
+        </div>
+        
+        <!-- Footer Copyright Section -->
+        <div class="footer-bottom">
+            <p>&copy; 2024 Db-Pred. All rights reserved.</p>
+        </div>
+    </footer>             
+    
 </body>
 </html>

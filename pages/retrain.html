@@ -7,28 +7,63 @@
     <link rel="stylesheet" href="/static/styles.css">
 </head>
 <body>
-    <header>
-        <nav>
-            <h1>Retrain Model</h1>
-            <ul>
+    <!-- Navbar Section -->
+    <nav id="navbar" class="navbar">
+        <div class="container">
+            <a href="/" class="navbar-brand">Diabetes Prediction</a>
+            <ul class="navbar-links">
                 <li><a href="/pages/index.html">Home</a></li>
                 <li><a href="/pages/predict.html">Make Prediction</a></li>
                 <li><a href="/pages/upload.html">Upload Data</a></li>
                 <li><a href="/pages/retrain.html">Retrain Model</a></li>
             </ul>
-        </nav>
-    </header>
+        </div>
+    </nav>
 
-    <section class="retrain">
-        <h2>Trigger Model Retraining</h2>
 
-        <form method="post">
-            <input type="submit" value="Trigger Retraining">
-        </form>
-    </section>
 
-    <footer>
-        <p>&copy; 2024 Diabetes Prediction App</p>
+    <footer id="footer" class="footer-section">
+        <!-- Footer Branding Section -->
+        <div class="footer-branding">
+            <h2>Diabetes Prediction</h2>
+            <p>Your reliable tool for diabetes risk prediction</p>
+        </div>
+        
+        <!-- Footer Navigation Section -->
+        <div class="footer-navigation">
+            <a href="/pages/index.html" class="footer-link">Home</a>
+            <a href="/pages/predict.html" class="footer-link">Make a Prediction</a>
+            <a href="/pages/upload.html" class="footer-link">Upload Data</a>
+            <a href="/pages/retrain.html" class="footer-link">Retrain Model</a>
+        </div>
+        
+        <!-- Footer Contact Section -->
+        <div class="footer-contact">
+            <a href="mailto:support@db-pred.com" class="footer-contact-link">
+                <i class="fas fa-envelope"></i> support@db-pred.com
+            </a>
+            <a href="tel:+1234567890" class="footer-contact-link">
+                <i class="fas fa-phone-alt"></i> +1 234 567 890
+            </a>
+        </div>
+        
+        <!-- Footer Social Links Section -->
+        <div class="footer-social-links">
+            <a href="https://www.linkedin.com" target="_blank" class="social-link">
+                <i class="fab fa-linkedin-in"></i>
+            </a>
+            <a href="https://www.twitter.com" target="_blank" class="social-link">
+                <i class="fab fa-twitter"></i>
+            </a>
+            <a href="https://www.instagram.com" target="_blank" class="social-link">
+                <i class="fab fa-instagram"></i>
+            </a>
+        </div>
+        
+        <!-- Footer Copyright Section -->
+        <div class="footer-bottom">
+            <p>&copy; 2024 Db-Pred. All rights reserved.</p>
+        </div>
     </footer>
 </body>
 </html>
