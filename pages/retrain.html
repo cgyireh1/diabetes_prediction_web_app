@@ -4,14 +4,31 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Retrain Model</title>
+    <link rel="stylesheet" href="static/styles.css"> <!-- Link to your custom styles -->
 </head>
 <body>
-    <h1>Retrain the Model</h1>
+    <header>
+        <nav>
+            <h1>Retrain Model</h1>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/predict">Make Prediction</a></li>
+                <li><a href="/upload">Upload Data</a></li>
+                <li><a href="/retrain">Retrain Model</a></li>
+            </ul>
+        </nav>
+    </header>
 
-    <form method="post">
-        <input type="submit" value="Trigger Retraining">
-    </form>
+    <section class="retrain">
+        <h2>Trigger Model Retraining</h2>
 
-    <a href="/">Back to Homepage</a>
+        <form method="post">
+            <input type="submit" value="Trigger Retraining">
+        </form>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 Diabetes Prediction App</p>
+    </footer>
 </body>
 </html>

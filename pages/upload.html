@@ -4,16 +4,33 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Upload Data</title>
+    <link rel="stylesheet" href="static/styles.css"> <!-- Link to your custom styles -->
 </head>
 <body>
-    <h1>Upload Data for Retraining</h1>
+    <header>
+        <nav>
+            <h1>Upload Data for Retraining</h1>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/predict">Make Prediction</a></li>
+                <li><a href="/upload">Upload Data</a></li>
+                <li><a href="/retrain">Retrain Model</a></li>
+            </ul>
+        </nav>
+    </header>
 
-    <form method="post" enctype="multipart/form-data">
-        <label for="data_file">Select Data File:</label><br>
-        <input type="file" id="data_file" name="data_file"><br><br>
-        <input type="submit" value="Upload">
-    </form>
+    <section class="upload-form">
+        <h2>Upload Data for Retraining</h2>
 
-    <a href="/">Back to Homepage</a>
+        <form method="post" enctype="multipart/form-data">
+            <label for="data_file">Select Data File (CSV, Excel, etc.):</label><br>
+            <input type="file" id="data_file" name="data_file" required><br><br>
+            <input type="submit" value="Upload">
+        </form>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 Diabetes Prediction App</p>
+    </footer>
 </body>
 </html>

@@ -4,19 +4,49 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Diabetes Prediction</title>
+    <link rel="stylesheet" href="static/styles.css"> <!-- Link to your custom styles -->
 </head>
 <body>
-    <h1>Welcome to the Diabetes Prediction Web App</h1>
-    <p>Here you can make predictions, upload new data for retraining, and view visualizations.</p>
+    <header>
+        <nav>
+            <h1>Diabetes Prediction Web App</h1>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/predict">Make Prediction</a></li>
+                <li><a href="/upload">Upload Data</a></li>
+                <li><a href="/retrain">Retrain Model</a></li>
+            </ul>
+        </nav>
+    </header>
 
-    <h2>Features</h2>
-    <ul>
-        <li><a href="/predict">Make a Prediction</a></li>
-        <li><a href="/upload">Upload Data</a></li>
-        <li><a href="/retrain">Retrain Model</a></li>
-    </ul>
+    <section class="home-content">
+        <h2>Welcome to the Diabetes Prediction Web App!</h2>
+        <p>Here, you can make predictions, upload new data for retraining the model, and visualize data.</p>
+        
+        <div class="features">
+            <div class="feature-card">
+                <h3>Make Prediction</h3>
+                <p>Enter your details to get a prediction on whether you're at risk for diabetes.</p>
+                <a href="/predict">Go to Prediction</a>
+            </div>
+            <div class="feature-card">
+                <h3>Upload Data</h3>
+                <p>Upload new data to retrain the model and improve predictions.</p>
+                <a href="/upload">Go to Upload</a>
+            </div>
+            <div class="feature-card">
+                <h3>Retrain Model</h3>
+                <p>Trigger a retraining of the model using the latest data.</p>
+                <a href="/retrain">Go to Retrain</a>
+            </div>
+        </div>
 
-    <h2>Data Visualizations</h2>
-    <!-- Add your charts here, e.g., using Plotly or Matplotlib -->
+        <h2>Data Visualizations</h2>
+        <!-- Visualizations like charts can go here, using Plotly, etc. -->
+    </section>
+    
+    <footer>
+        <p>&copy; 2024 Diabetes Prediction App</p>
+    </footer>
 </body>
 </html>
