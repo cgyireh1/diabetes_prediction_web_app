@@ -1,4 +1,20 @@
-/* Navbar Styles */
+/* Global Styles */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: 'Arial', sans-serif;
+}
+
+/* Fixed Navbar */
 .navbar {
     background-color: #333;
     color: white;
@@ -44,67 +60,57 @@
     color: #4CAF50;
 }
 
-/* Add some space below the navbar */
+
 body {
-    margin-top: 60px;
+    margin-top: 40px;
 }
 
+/* Layout Container */
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* General Page Layout */
+section {
+    margin: 40px 0;
+}
 
 /* Hero Section Styles */
 .hero-section {
     height: 100vh;
-    background-image: url('/pages/images/diabetes.jpg'); 
+    background-image: url('/pages/images/diabetes.jpg');
     background-size: cover;
-    background-position: center;
+    background-position: center center;
+    background-repeat: no-repeat;
     color: white;
     display: flex;
     justify-content: center;
     align-items: center;
     text-align: center;
     position: relative;
-}
-
-.hero-content {
-    background-color: rgba(0, 0, 0, 0.6);  /* Enhanced contrast for readability */
-    padding: 40px 30px;
-    border-radius: 15px;
-    max-width: 850px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    min-height: 300px; 
 }
 
 .hero-content h1 {
-    font-size: 4rem;
+    font-size: 3rem;
     margin-bottom: 20px;
-    font-weight: bold;
 }
 
 .hero-content p {
     font-size: 1.5rem;
-    margin-bottom: 30px;
-    line-height: 1.6;
+    max-width: 600px;
+    margin: 0 auto;
 }
 
-.cta-button {
-    background-color: #4CAF50;  /* Green button color */
-    color: white;
-    padding: 15px 30px;
-    text-decoration: none;
-    border-radius: 5px;
-    font-size: 1.3rem;
-    transition: background-color 0.3s ease;
-    text-transform: uppercase;
-}
 
-.cta-button:hover {
-    background-color: #45a049;  /* Slightly darker green on hover */
-}
-
-/* About Section Styles */
+/* About Section */
 .about-section {
     padding: 60px 20px;
     background: linear-gradient(to right, #e3f2f1, #ffffff); /* Soft gradient background */
     text-align: center;
-    border-top: 4px solid #4CAF50;  /* Green border at the top for balance */
+    border-top: 4px solid #4CAF50;
 }
 
 .about-section h2 {
@@ -112,7 +118,6 @@ body {
     margin-bottom: 30px;
     font-weight: bold;
     color: #333;
-    /* text-transform: uppercase; */
 }
 
 .about-section p {
@@ -123,11 +128,10 @@ body {
     color: #555;
     margin-bottom: 30px;
     font-family: 'Roboto', sans-serif;
-    /* font-style: italic; */
 }
 
 .about-section .cta-button {
-    background-color: #4CAF50;  /* Green color for the button */
+    background-color: #4CAF50;
     color: white;
     padding: 15px 30px;
     border-radius: 5px;
@@ -135,43 +139,20 @@ body {
     text-decoration: none;
     display: inline-block;
     transition: background-color 0.3s;
-    margin-top: 30px;  /* Space between text and button */
+    margin-top: 30px;
 }
 
 .about-section .cta-button:hover {
-    background-color: #45a049;  /* Darker green on hover */
+    background-color: #45a049;
 }
-
-/* Adding some light text shadow for a more modern look */
-.about-section h2, .about-section p {
-    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
-}
-
-/* Responsive Styles for the About Section */
-@media (max-width: 768px) {
-    .about-section h2 {
-        font-size: 2.5rem;
-    }
-
-    .about-section p {
-        font-size: 1.1rem;
-        line-height: 1.6;
-    }
-
-    .about-section .cta-button {
-        padding: 12px 25px;
-        font-size: 1.1rem;
-    }
-}
-
 
 /* Features Section Styles */
 .features-section {
     padding: 60px 20px;
     background-color: #ffffff;
-    border-top: 4px solid #4CAF50;  /* Add a green border for visual interest */
-    border-bottom: 4px solid #4CAF50;  /* Add a green border for balance */
-    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);  /* Add soft shadow for depth */
+    border-top: 4px solid #4CAF50;
+    border-bottom: 4px solid #4CAF50;
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
 }
 
 .features-section h2 {
@@ -188,33 +169,31 @@ body {
     align-items: center;
     margin-bottom: 40px;
     text-align: center;
-    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth hover effect */
     padding: 20px;
-    border-radius: 10px;  /* Rounded corners for the feature blocks */
-    background-color: #f9f9f9;  /* Light background for each feature */
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);  /* Add light shadow for depth */
+    border-radius: 10px;
+    background-color: #f9f9f9;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 .feature:hover {
-    transform: translateY(-10px);  /* Slight upward movement on hover */
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);  /* Stronger shadow on hover */
+    transform: translateY(-10px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
 }
 
 .feature img {
-    width: 100px;  /* Slightly bigger icons */
+    width: 100px;
     margin-right: 30px;
-    transition: transform 0.3s ease;  /* Make the icons animate smoothly */
 }
 
 .feature img:hover {
-    transform: rotate(15deg);  /* Smooth icon rotation */
+    transform: rotate(15deg);
 }
 
 .feature h3 {
     font-size: 2rem;
     margin-bottom: 15px;
     font-weight: 600;
-    color: #4CAF50;  /* Change color to match the green theme */
+    color: #4CAF50;
 }
 
 .feature p {
@@ -222,34 +201,13 @@ body {
     max-width: 700px;
     margin: 0 auto;
     line-height: 1.6;
-    color: #555;  /* A softer color for the text */
+    color: #555;
 }
 
-/* Add responsiveness for smaller screens */
-@media (max-width: 768px) {
-    .feature {
-        flex-direction: column;
-        padding: 20px 15px;  /* Add padding on smaller screens */
-    }
-
-    .feature img {
-        margin-bottom: 20px;  /* Space between the image and the text */
-    }
-
-    .features-section h2 {
-        font-size: 2.5rem;
-    }
-
-    .feature h3 {
-        font-size: 1.8rem;
-    }
-}
-
-
-/* General Footer Styling */
+/* Footer Styles */
 .footer-section {
-    background-color: #2c3e50;  /* Dark background color */
-    color: #ecf0f1;  /* Light text color */
+    background-color: #2c3e50;
+    color: #ecf0f1;
     padding: 40px 0;
     font-family: 'Arial', sans-serif;
 }
@@ -268,7 +226,6 @@ body {
     margin-bottom: 40px;
 }
 
-/* Footer Navigation Section */
 .footer-navigation {
     display: flex;
     justify-content: center;
@@ -290,7 +247,6 @@ body {
     background-color: rgba(39, 174, 96, 0.2);
 }
 
-/* Footer Contact Section */
 .footer-contact {
     display: flex;
     justify-content: center;
@@ -316,7 +272,6 @@ body {
     transform: translateY(-3px);
 }
 
-/* Footer Social Links Section */
 .footer-social-links {
     display: flex;
     justify-content: center;
@@ -335,7 +290,6 @@ body {
     transform: scale(1.1);
 }
 
-/* Footer Copyright Section */
 .footer-bottom {
     font-size: 1rem;
     color: #95a5a6;
@@ -344,8 +298,30 @@ body {
     border-top: 1px solid #34495e;
 }
 
-/* Responsive Footer Design */
+/* Responsive Hero Section */
+
 @media (max-width: 768px) {
+    .hero-section {
+        min-height: 250px; 
+        background-position: center center;
+    }
+    .predict-content h1 {
+        font-size: 2rem;
+    }
+
+    .predict-content p {
+        font-size: 1rem;
+        max-width: 90%;
+    }
+
+    .predict-section {
+        min-height: 200px;
+    }
+
+    .cta-button {
+        font-size: 1.2rem;
+    }
+
     .footer-section {
         padding: 30px 20px;
     }
@@ -371,13 +347,16 @@ body {
     .social-link {
         font-size: 1.5rem;
     }
+
+    .footer-bottom {
+        font-size: 0.9rem;
+    }
 }
 
-
-
-/* Prediction Section */
+/* Prediction Section for ppre-predictions */
 .predict-section {
     height: 100vh;
+    background-image: url('/pages/images/accurate-prediction.jpg');
     background-size: cover;
     background-position: center;
     color: white;
@@ -386,4 +365,105 @@ body {
     align-items: center;
     text-align: center;
     position: relative;
+}
+
+.predict-content {
+    background-color: rgba(0, 0, 0, 0.6);  /* Enhanced contrast for readability */
+    padding: 40px 30px;
+    border-radius: 15px;
+    max-width: 850px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.predict-content h1 {
+    font-size: 3rem;
+    margin-bottom: 20px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.predict-content p {
+    font-size: 1.5rem;
+    margin-bottom: 30px;
+    line-height: 1.6;
+}
+
+.predict-section .cta-button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 15px 30px;
+    border-radius: 5px;
+    font-size: 1.2rem;
+    text-decoration: none;
+    display: inline-block;
+    transition: background-color 0.3s;
+    margin-top: 30px;
+}
+
+
+/* Prediction Section */
+.prediction-section {
+    padding: 60px 20px;
+    background-color: #f9f9f9;
+    text-align: center;
+}
+
+.prediction-section h2 {
+    font-size: 2.5rem;
+    margin-bottom: 30px;
+    font-weight: bold;
+}
+
+.prediction-section form {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.prediction-section label {
+    display: block;
+    font-size: 1.2rem;
+    margin: 15px 0 5px;
+}
+
+.prediction-section input {
+    width: 100%;
+    padding: 10px;
+    font-size: 1.2rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 15px;
+}
+
+.cta-button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 15px 30px;
+    border-radius: 5px;
+    font-size: 1.2rem;
+    text-decoration: none;
+    display: inline-block;
+    transition: background-color 0.3s;
+}
+
+.cta-button:hover {
+    background-color: #45a049;
+}
+
+/* Result Section */
+.result-section {
+    margin-top: 30px;
+    padding: 20px;
+    background-color: #e3f2f1;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.result-section h3 {
+    font-size: 2rem;
+    color: #333;
+}
+
+.result-section p {
+    font-size: 1.5rem;
+    color: #333;
 }
