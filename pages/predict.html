@@ -97,6 +97,7 @@
             border-radius: 15px;
             color: #fff;
             position: relative;
+            text-align: center;
             z-index: 1;
         }
 
@@ -215,13 +216,20 @@
             menu.classList.toggle("active");
         }
 
+        // Hide the result container when the user starts a new prediction
+        document.querySelectorAll('input, select').forEach(input => {
+            input.addEventListener('focus', () => {
+                document.getElementById("result").style.display = "none";
+            });
+        });
+
         // Handling the form submission
         document.getElementById("predictForm").addEventListener("submit", function(event) {
             event.preventDefault();
             // Retrieve form values and create a payload for prediction
             const formData = new FormData(event.target);
             const data = Object.fromEntries(formData.entries());
-            
+
             fetch("/predict", {
                 method: "POST",
                 body: JSON.stringify(data),
