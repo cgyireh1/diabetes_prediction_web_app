@@ -235,16 +235,6 @@
                 }
             });
         });
-
-        // Validate File Type
-        document.querySelector('#uploadForm').addEventListener('submit', function (e) {
-            const fileInput = document.querySelector('input[type="file"]');
-            const file = fileInput.files[0];
-            if (!file.name.endsWith('.csv')) {
-                alert('Please upload a CSV file.');
-                e.preventDefault();
-            }
-        });
     </script>
 </body>
 </html>

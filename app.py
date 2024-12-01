@@ -38,6 +38,10 @@ predictor = DataPrediction(model_path=model_path, scaler_path=scaler_path, encod
 # Path for the retraining logs
 LOG_FILE_PATH = "logs/retraining_log.json"
 
+# Ensure the directories for logs and uploads exist
+os.makedirs(os.path.dirname(LOG_FILE_PATH), exist_ok=True)
+os.makedirs("static/uploads", exist_ok=True)
+
 #  the uploaded file
 def save_uploaded_file(upload_file: UploadFile, destination: str):
     with open(destination, "wb") as buffer:
@@ -59,9 +63,8 @@ async def root(request: Request):
     return templates.TemplateResponse("index.html", {"request": request, "title": "Home"})
 
 # Model Prediction Endpoint
-@app.post("/predict/")
+@app.post("/predict/") 
 async def predict(request: PredictionRequest):
-    # Prepare input for the model
     new_data = pd.DataFrame([{
         "gender": request.gender,
         "age": request.age,
@@ -76,21 +79,26 @@ async def predict(request: PredictionRequest):
     try:
         print(f"Received data: {new_data}")  # Log the data received
         
+        # Initialize predictor with correct paths
+        predictor = DataPrediction(model_path=model_path, scaler_path=scaler_path, encoder_path=encoder_path)
+        
+        # Prediction
         prediction_result = predictor.predict_single(new_data)
         
         # Log the prediction result for debugging
         print(f"Prediction result: {prediction_result}")
 
+        # Format the response based on prediction
         if prediction_result == 1:
             prediction_message = "Diabetic. You should consult a doctor for a proper treatment plan 🫶."
         else:
             prediction_message = "Non-Diabetes, You do not have diabetes. Keep up the healthy lifestyle! 🎉"
         
-        return {"Prediction": prediction_message}
+        return JSONResponse(content={"prediction": prediction_message})
     except Exception as e:
         print(f"Error occurred: {str(e)}")
-        return {"error": f"An error occurred: {str(e)}"}
-    
+        return JSONResponse(content={"error": f"An error occurred: {str(e)}"})
+
 # Data Upload Page
 @app.get("/upload_data/", response_class=HTMLResponse)
 async def upload_page(request: Request):
@@ -99,18 +107,14 @@ async def upload_page(request: Request):
 # Data Upload Endpoint
 @app.post("/upload_data/")
 async def upload_data(file: UploadFile = File(...), retrain: str = Form("false")):
-    retrain = retrain.lower() == "true"  # Convert string to boolean
+    retrain = retrain.lower() == "true"
     message = ""
     error = ""
 
     try:
-        # Ensure directories exist
-        os.makedirs(os.path.dirname("static/uploads/"), exist_ok=True)
-
         # Save the uploaded file with a timestamp to avoid overwriting
         file_location = f"static/uploads/{datetime.now().strftime('%Y%m%d%H%M%S')}_{file.filename}"
-        with open(file_location, "wb") as f:
-            f.write(file.file.read())
+        save_uploaded_file(file, file_location)
 
         # Validate file structure
         data_preprocessor = DataPreprocessing(file_location)
@@ -126,9 +130,6 @@ async def upload_data(file: UploadFile = File(...), retrain: str = Form("false")
                 "model_path": model_path,
                 "scaler_path": scaler_path,
             }
-
-            # Ensure the logs directory exists
-            os.makedirs(os.path.dirname(LOG_FILE_PATH), exist_ok=True)
 
             # Append retraining logs
             if os.path.exists(LOG_FILE_PATH):
@@ -176,8 +177,7 @@ async def retrain_model(file: UploadFile = File(...)):
 
     os.makedirs(os.path.dirname(file_location), exist_ok=True)
 
-    with open(file_location, "wb") as f:
-        f.write(file.file.read())
+    save_uploaded_file(file, file_location)
 
     try:
         data_preprocessor = DataPreprocessing(file_location)

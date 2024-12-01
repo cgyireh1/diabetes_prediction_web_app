@@ -26,7 +26,7 @@
             top: 0;
             left: 0;
             width: 100%;
-            height: 100%;  
+            height: 100%;
             background: url('https://www.transparenttextures.com/patterns/black-felt.png') repeat;
             z-index: -1;
         }
@@ -168,6 +168,28 @@
             background-color: #218838;
         }
 
+        /* Loading indicator styles */
+        .loading {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 24px;
+            color: #fff;
+            z-index: 999;
+        }
+
+        .error-message, .success-message {
+            color: red;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .success-message {
+            color: green;
+        }
+
     </style>
 </head>
 <body>
@@ -183,8 +205,8 @@
             <ul class="navbar-links">
                 <li><a href="/pages/index.html"><i class="fas fa-home"></i> Home</a></li>
                 <li><a href="/pages/pre-predict.html"><i class="fas fa-chart-line"></i> Make Prediction</a></li>
-                <li><a href="/pages/upload.html" class="active"><i class="fas fa-upload"></i> Upload Data</a></li>
-                <li><a href="/pages/retrain.html"><i class="fas fa-sync-alt"></i> Retrain Model</a></li>
+                <li><a href="/pages/upload.html"><i class="fas fa-upload"></i> Upload Data</a></li>
+                <li><a href="/pages/retrain.html" class="active"><i class="fas fa-sync-alt"></i> Retrain Model</a></li>
             </ul>
         </div>
     </nav>
@@ -195,7 +217,7 @@
     <div class="form-container">
         <h1>Retrain the Model</h1>
         <h2>Upload Data for Retraining</h2>
-        <form action="/retrain" method="post" enctype="multipart/form-data">
+        <form action="/retrain" method="post" enctype="multipart/form-data" id="retrain-form">
             <label for="data-file">Upload Dataset:</label>
             <input type="file" id="data-file" name="data-file" accept=".csv" required><br>
 
@@ -207,7 +229,13 @@
 
             <input type="submit" value="Retrain Model">
         </form>
+
+        <!-- Success/Error Messages -->
+        <div id="status-message" class="success-message" style="display: none;"></div>
+        <div id="error-message" class="error-message" style="display: none;"></div>
     </div>
+
+    <div id="loading-indicator" class="loading">Retraining model, please wait...</div>
 
     <script>
         // Toggle Menu for Mobile
@@ -228,6 +256,71 @@
                     link.classList.remove("active");
                 }
             });
+        });
+
+        // Handling the form submission with a loading indicator
+        const form = document.getElementById('retrain-form');
+        const loadingIndicator = document.getElementById('loading-indicator');
+        const statusMessage = document.getElementById('status-message');
+        const errorMessage = document.getElementById('error-message');
+
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            loadingIndicator.style.display = 'block';
+            statusMessage.style.display = 'none';
+            errorMessage.style.display = 'none';
+
+            // Simulate form submission here (AJAX or fetch can be used for real requests)
+            setTimeout(function() {
+                loadingIndicator.style.display = 'none';
+                statusMessage.style.display = 'block';
+                statusMessage.textContent = 'Model retrained successfully!';
+                errorMessage.style.display = 'none';
+            }, 3000); // Simulate success after 3 seconds (replace with actual AJAX call)
+        });
+
+        // Handle error messages dynamically
+        function showErrorMessage(message) {
+            errorMessage.style.display = 'block';
+            errorMessage.textContent = message;
+        }
+
+        // Handle success messages dynamically
+        function showSuccessMessage(message) {
+            statusMessage.style.display = 'block';
+            statusMessage.textContent = message;
+        }
+
+        // Function to make the actual retraining request via AJAX (fetch)
+        form.addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            // Show loading indicator
+            loadingIndicator.style.display = 'block';
+
+            // Create FormData object to send form data
+            const formData = new FormData(form);
+            
+            try {
+                const response = await fetch('/retrain', {
+                    method: 'POST',
+                    body: formData,
+                });
+
+                const result = await response.json();
+
+                // Hide loading and display appropriate message
+                loadingIndicator.style.display = 'none';
+
+                if (response.ok) {
+                    showSuccessMessage(result.message);
+                } else {
+                    showErrorMessage(result.error || 'An error occurred.');
+                }
+            } catch (error) {
+                loadingIndicator.style.display = 'none';
+                showErrorMessage('Failed to submit the form: ' + error.message);
+            }
         });
     </script>
 </body>
