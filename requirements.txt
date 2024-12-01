@@ -1,3 +1,4 @@
+pip==24.3.1
 annotated-types==0.7.0
 anyio==4.4.0
 asttokens==2.4.1
@@ -58,7 +59,7 @@ python-dateutil==2.9.0.post0
 python-dotenv==1.0.1
 python-multipart==0.0.9
 pytz==2024.1
-pywin32==306
+# pywin32==306
 PyYAML==6.0.1
 pyzmq==26.0.3
 requests==2.32.3
