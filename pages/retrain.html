@@ -276,7 +276,7 @@
                 statusMessage.style.display = 'block';
                 statusMessage.textContent = 'Model retrained successfully!';
                 errorMessage.style.display = 'none';
-            }, 3000); // Simulate success after 3 seconds (replace with actual AJAX call)
+            }, 3000); 
         });
 
         // Handle error messages dynamically
@@ -295,10 +295,8 @@
         form.addEventListener('submit', async function(e) {
             e.preventDefault();
 
-            // Show loading indicator
             loadingIndicator.style.display = 'block';
 
-            // Create FormData object to send form data
             const formData = new FormData(form);
             
             try {
@@ -309,7 +307,8 @@
 
                 const result = await response.json();
 
-                // Hide loading and display appropriate message
+                console.log(result);  // Log the result to see what the backend returns
+                
                 loadingIndicator.style.display = 'none';
 
                 if (response.ok) {
@@ -322,6 +321,7 @@
                 showErrorMessage('Failed to submit the form: ' + error.message);
             }
         });
+
     </script>
 </body>
 </html>

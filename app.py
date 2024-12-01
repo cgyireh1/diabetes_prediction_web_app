@@ -171,33 +171,45 @@ async def upload_data(file: UploadFile = File(...), retrain: str = Form("false")
 async def retrain_page(request: Request):
     return templates.TemplateResponse("retrain.html", {"request": request, "title": "Retrain Model"})
 
-@app.post("/retrain/")
-async def retrain_model(file: UploadFile = File(...)):
-    file_location = f"static/uploads/{file.filename}"
-
-    os.makedirs(os.path.dirname(file_location), exist_ok=True)
-
-    save_uploaded_file(file, file_location)
-
+@app.post("/retrain")
+async def retrain_model(data_file: UploadFile = File(...), model_parameters: str = Form("default")):
     try:
-        data_preprocessor = DataPreprocessing(file_location)
-        X, y = data_preprocessor.preprocess_data()
-        X_train, X_test, y_train, y_test = data_preprocessor.split_data(X, y)
+        # Save the uploaded file
+        file_location = f"temp_{data_file.filename}"
+        with open(file_location, "wb") as file:
+            file.write(data_file.file.read())
 
-        model_pipeline = ModelPipeline()
+        # Load dataset
+        data = pd.read_csv(file_location)
+        
+        # Example preprocessing steps, adjust as necessary
+        # Assume 'target' is the column to predict
+        X = data.drop("target", axis=1)
+        y = data["target"]
+        
+        # Split dataset
+        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
 
+        # Initialize model with selected parameters
+        if model_parameters == "tuned":
+            model = RandomForestClassifier(n_estimators=200, max_depth=10)  # Example of tuned model
+        else:
+            model = RandomForestClassifier()  # Default model
+        
         # Retrain the model
-        trained_model, model_filename = model_pipeline.retrain_model(X_train, y_train)
+        model.fit(X_train, y_train)
 
-        # Return response with model path
-        return JSONResponse(content={
-            "message": "Model retrained successfully",
-            "model_path": model_filename
-        })
+        # Save the retrained model
+        model_filename = "retrained_model.pkl"
+        joblib.dump(model, model_filename)
+        
+        # Clean up the temporary file
+        os.remove(file_location)
+
+        return JSONResponse(content={"message": "Model retrained successfully!"})
 
     except Exception as e:
-        # Return a more detailed error message
-        return JSONResponse(status_code=400, content={"error": f"Failed to retrain model: {str(e)}"})
+        return JSONResponse(status_code=500, content={"error": f"An error occurred: {str(e)}"})
 
 
 # CORS Configuration
