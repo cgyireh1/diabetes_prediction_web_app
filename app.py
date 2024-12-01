@@ -4,10 +4,10 @@ import pandas as pd
 from pydantic import BaseModel
 from src.model import ModelPipeline
 from src.prediction import DataPrediction
+from src.preprocessing import DataPreprocessing
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
-from src.preprocessing import DataPreprocessing
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi import FastAPI, Form, UploadFile, Request
 
@@ -16,6 +16,8 @@ app = FastAPI()
 
 # Mount static files and templates
 app.mount("/static", StaticFiles(directory="static"), name="static")
+app.mount("/pages", StaticFiles(directory="pages"), name="pages")
+
 templates = Jinja2Templates(directory="pages")
 
 # Paths to the saved model and scaler (Update paths accordingly)
