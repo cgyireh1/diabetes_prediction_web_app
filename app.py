@@ -28,7 +28,7 @@ predictor = DataPrediction(model_path=model_path, scaler_path=scaler_path)
 # Home Route
 @app.get("/", response_class=HTMLResponse)
 async def root(request: Request):
-    return templates.TemplateResponse("home.html", {"request": request, "title": "Home"})
+    return templates.TemplateResponse("index.html", {"request": request, "title": "Home"})
 
 # Model Prediction Endpoint
 @app.post("/predict/")
