@@ -11,9 +11,14 @@ The web app is built using **FastAPI** for the backend, which serves the model p
 ---
 
 ## Features
-- **Prediction Page**: Make predictions for diabetes risk based on individual inputs.
-- **Upload Page**: Upload data to retrain the model.
-- **Retraining Page**: Trigger model retraining using uploaded data.
+- **Gender**: Male/Female  
+- **Age**: Numerical value  
+- **Hypertension**: (1 for yes, 0 for no)  
+- **Heart Disease**: (1 for yes, 0 for no)  
+- **BMI**: Numerical value (e.g., 23.5, 30.2)  
+- **HbA1c Level**: Numerical value 
+- **Blood Glucose Level**: Numerical value
+- **Smoking History**: never, current, former, ever, not current
 
 ---
 
