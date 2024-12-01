@@ -45,7 +45,7 @@ def save_uploaded_file(upload_file: UploadFile, destination: str):
 
 class PredictionRequest(BaseModel):
     gender: str = Field(..., example="e.g. Male/Female")
-    age: float = Field(..., example="Enter age")
+    age: int = Field(..., example="Enter age")
     hypertension: int = Field(..., example="e.g. 1 for Yes, 0 for No")
     heart_disease: int = Field(..., example="e.g. 1 for Yes, 0 for No")
     bmi: float = Field(..., example="e.g. 25")
