@@ -177,7 +177,7 @@
     <div class="form-container">
         <h1>Diabetes Prediction</h1>
         <h2>Check Your Risk</h2>
-        <form action="/predict" method="post">
+        <form id="predictForm">
             <label for="gender">Gender:</label>
             <input type="text" id="gender" name="gender" placeholder="Enter (e.g. Male or Female)" required>
             <label for="age">Age:</label>
@@ -200,7 +200,7 @@
                 <option value="ever">Ever (ever smoked)</option>
                 <option value="not current">Not Current (smokes but on a break)</option>
             </select>
-            <input type="submit" value="predict">
+            <input type="submit" value="Predict">
         </form>
     </div>
 
@@ -209,37 +209,45 @@
         <p id="predictionText"></p>
     </div>
 
-    
-
     <script>
         function toggleMenu() {
             const navbarLinks = document.querySelector('.navbar-links');
             navbarLinks.classList.toggle('active');
         }
-        const response = await fetch('http://127.0.0.1:8000/predict/', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(data),
+
+        document.getElementById('predictForm').addEventListener('submit', async function(event) {
+            event.preventDefault();  // Prevent the form from refreshing the page
+
+            const formData = new FormData(this);
+            const data = {};
+            formData.forEach((value, key) => data[key] = value);  // This gathers form data into a dictionary
+
+            try {
+                const response = await fetch('https://diabetes-prediction-web-app-l0ks.onrender.com/predict', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data)  // Send data as JSON string
+                });
+
+                const result = await response.json();
+                const resultContainer = document.getElementById('result');
+                const predictionText = document.getElementById('predictionText');
+                resultContainer.style.display = 'block';
+
+                if (result.prediction === 'Diabetes') {
+                    predictionText.textContent = 'You have a high risk of having diabetes.';
+                    predictionText.className = 'positive';
+                } else {
+                    predictionText.textContent = 'You have a low risk of having diabetes.';
+                    predictionText.className = 'negative';
+                }
+            } catch (error) {
+                alert('Error making prediction. Please try again.');
+            }
         });
 
-
-        function showPredictionResult(prediction) {
-            const resultContainer = document.getElementById('result');
-            const predictionText = document.getElementById('predictionText');
-            
-            if (prediction === 'positive') {
-                predictionText.textContent = 'Diabetic. You should consult a doctor for a proper treatment plan 🫶';
-                predictionText.classList.add('positive');
-                predictionText.classList.remove('negative');
-            } else {
-                predictionText.textContent = 'Non-Diabetes, You do not have diabetes. Keep up the healthy lifestyle! 🎉';
-                predictionText.classList.add('negative');
-                predictionText.classList.remove('positive');
-            }
-            resultContainer.style.display = 'block';
-        }
     </script>
 </body>
 </html>
