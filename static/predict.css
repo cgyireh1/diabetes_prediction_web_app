@@ -1,0 +1,137 @@
+/* Navbar Styles */
+.navbar {
+  background-color: #333;
+  color: white;
+  padding: 15px 25px;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.navbar .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.navbar .navbar-brand {
+  font-size: 1.8rem;
+  color: #fff;
+  text-decoration: none;
+}
+
+.navbar-links {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.navbar-links li {
+  margin: 0 15px;
+}
+
+.navbar-links a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 1.2rem;
+  transition: color 0.3s;
+}
+
+.navbar-links a:hover {
+  color: #4CAF50;
+}
+
+/* Container to ensure layout is centered */
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Prediction Section */
+.predict-section {
+  height: 100vh;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  position: relative;
+}
+
+.predict-content {
+  background-color: rgba(0, 0, 0, 0.6);
+  padding: 40px 30px;
+  border-radius: 15px;
+  max-width: 850px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.predict-content h1 {
+  font-size: 3rem;
+  margin-bottom: 20px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.predict-content p {
+  font-size: 1.3rem;
+  margin-bottom: 30px;
+  line-height: 1.6;
+}
+
+/* General Form Styles */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  background: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+label {
+  font-size: 1.2rem;
+  color: #333;
+  margin-bottom: 5px;
+}
+
+input, select, button {
+  font-size: 1.1rem;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+input::placeholder {
+  color: #aaa;
+}
+
+button {
+  background-color: #4CAF50;
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #45a049;
+}
+
+input:focus, select:focus, button:focus {
+  outline: none;
+  border-color: #4CAF50;
+}
+
+input[type="checkbox"] {
+  width: auto;
+  margin-right: 10px;
+}

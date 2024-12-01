@@ -1,77 +1,122 @@
-from flask import Flask, render_template, request, jsonify
+import os
 import joblib
 import pandas as pd
-import numpy as np
-from sklearn.preprocessing import LabelEncoder
+from pydantic import BaseModel
+from src.model import ModelPipeline
 from src.prediction import DataPrediction
+from fastapi.responses import HTMLResponse
+from fastapi.staticfiles import StaticFiles
+from fastapi.templating import Jinja2Templates
+from src.preprocessing import DataPreprocessing
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi import FastAPI, Form, UploadFile, Request
 
-app = Flask(__name__)
 
-# Load the model, scaler, and encoder (update with actual paths)
-model_path = "models/retrained_model_7.pkl"
+app = FastAPI()
+
+# Mount static files and templates
+app.mount("/static", StaticFiles(directory="static"), name="static")
+templates = Jinja2Templates(directory="pages")
+
+# Paths to the saved model and scaler (Update paths accordingly)
+model_path = "models/randomforest_model.pkl"
 scaler_path = "models/scaler.pkl"
-encoder_path = "models/encoder.pkl"
 
-# Initialize the Prediction class
-prediction = PredictionData(model_path=model_path, scaler_path=scaler_path, encoder_path=encoder_path)
+# Initialize prediction object
+predictor = DataPrediction(model_path=model_path, scaler_path=scaler_path)
 
-@app.route('/')
-def index():
-    # Render homepage with visualizations
-    return render_template('index.html')
+# Home Route
+@app.get("/", response_class=HTMLResponse)
+async def root(request: Request):
+    return templates.TemplateResponse("home.html", {"request": request, "title": "Home"})
 
-@app.route('/predict', methods=['GET', 'POST'])
-def predict():
-    if request.method == 'POST':
-        # Assuming the user inputs data via a form on the page
-        age = float(request.form['age'])
-        gender = request.form['gender']
-        hypertension = int(request.form['hypertension'])
-        heart_disease = int(request.form['heart_disease'])
-        smoking_history = request.form['smoking_history']
-        bmi = float(request.form['bmi'])
-        HbA1c_level = float(request.form['HbA1c_level'])
-        blood_glucose_level = int(request.form['blood_glucose_level'])
-
-        # Create a DataFrame for the input
-        input_data = pd.DataFrame([{
-            'age': age,
-            'gender': gender,
-            'hypertension': hypertension,
-            'heart_disease': heart_disease,
-            'smoking_history': smoking_history,
-            'bmi': bmi,
-            'HbA1c_level': HbA1c_level,
-            'blood_glucose_level': blood_glucose_level
-        }])
-
-        # Get the prediction
-        result = prediction.predict_single(input_data)
-
-        return render_template('predict.html', prediction=result)
+# Model Prediction Endpoint
+@app.post("/predict/")
+async def predict(
+    gender: str = Form(...),
+    age: float = Form(...),
+    bmi: float = Form(...),
+    blood_glucose_level: float = Form(...),
+):
+    # Prepare input for the model
+    new_data = pd.DataFrame([[gender, age, bmi, blood_glucose_level]],
+                            columns=["gender", "age", "bmi", "blood_glucose_level"])
     
-    return render_template('predict.html')
+    # Make prediction
+    result = predictor.predict_single(new_data)
+    
+    return {"Prediction": result}
 
-@app.route('/upload', methods=['GET', 'POST'])
-def upload():
-    if request.method == 'POST':
-        # Handle file upload and retraining process here
-        file = request.files['data_file']
-        if file:
-            # Process the file, retrain the model and save it
-            # file.save(os.path.join("uploads", file.filename))  # Save the uploaded file
-            return jsonify({"message": "Data uploaded successfully, retraining started!"})
+# Data Upload Page
+@app.get("/upload_data/", response_class=HTMLResponse)
+async def upload_page(request: Request):
+    return templates.TemplateResponse("upload.html", {"request": request, "title": "Upload Data"})
 
-    return render_template('upload.html')
+# Data Upload Endpoint
+@app.post("/upload_data/")
+async def upload_data(file: UploadFile):
+    file_location = f"static/uploads/{file.filename}"
+    os.makedirs(os.path.dirname(file_location), exist_ok=True)
+    with open(file_location, "wb") as f:
+        f.write(file.file.read())
+    return {"message": "File uploaded successfully", "file_path": file_location}
 
-@app.route('/retrain', methods=['GET', 'POST'])
-def retrain():
-    if request.method == 'POST':
-        # Trigger model retraining here based on new data
-        prediction.retrain_model()  # Assuming this method will handle retraining
-        return jsonify({"message": "Model retraining triggered successfully!"})
+# Retrain Model Page
+@app.get("/retrain/", response_class=HTMLResponse)
+async def retrain_page(request: Request):
+    return templates.TemplateResponse("retrain.html", {"request": request, "title": "Retrain"})
 
-    return render_template('retrain.html')
+# Retrain Model Endpoint
+@app.post("/retrain/")
+async def retrain_model(file: UploadFile):
+    # Save the uploaded CSV file
+    file_location = f"static/uploads/{file.filename}"
+    os.makedirs(os.path.dirname(file_location), exist_ok=True)
+    with open(file_location, "wb") as f:
+        f.write(file.file.read())
 
-if __name__ == '__main__':
-    app.run(debug=True)
+    try:
+        # Initialize preprocessing
+        data_preprocessor = DataPreprocessing(file_location)
+        
+        # Preprocess the data
+        X, y = data_preprocessor.preprocess_data()
+        
+        # Split data into train/test sets
+        X_train, X_test, y_train, y_test = data_preprocessor.split_data(X, y)
+        
+        # Initialize the model pipeline
+        model_pipeline = ModelPipeline()
+
+        # Train and save the model
+        trained_model = model_pipeline.retrain_model(X_train, y_train)
+
+        # Save the scaler (for prediction later)
+        scaler_path = os.path.join(model_pipeline.model_dir, "scaler.pkl")
+        joblib.dump(model_pipeline.scaler, scaler_path)
+
+        return {
+            "message": "Model retrained successfully",
+            "model_path": f"{model_pipeline.model_dir}/retrained_model.pkl",
+            "scaler_path": scaler_path,
+        }
+
+    except Exception as e:
+        return {"error": str(e)}
+
+
+origins = [
+    "http://localhost:3000",
+    "http://localhost",
+    "http://localhost:8080",
+]
+
+# Add CORS middleware
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
