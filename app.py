@@ -109,7 +109,7 @@ async def upload_data(request: Request, file: UploadFile = File(...), retrain: b
         data_preprocessor = DataPreprocessing(file_location)
         if not data_preprocessor.validate_columns():  # Assuming validate_columns method checks for expected columns
             error = "Invalid file structure. Please check the columns in the uploaded file."
-            return templates.TemplateResponse("upload.html", {"request": request, "message": message, "error": error})
+            return JSONResponse(content={"error": error}, status_code=400)
 
         if retrain:
             # Log retraining information
@@ -154,10 +154,11 @@ async def upload_data(request: Request, file: UploadFile = File(...), retrain: b
         else:
             message = "File uploaded successfully, but retraining not triggered."
 
+        return JSONResponse(content={"message": message})
+    
     except Exception as e:
         error = f"Error during file upload or retraining: {str(e)}"
-
-    return templates.TemplateResponse("upload.html", {"request": request, "message": message, "error": error})
+        return JSONResponse(content={"error": error}, status_code=500)
 
 # Retrain Model Page
 @app.get("/retrain/", response_class=HTMLResponse)

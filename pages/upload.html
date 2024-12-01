@@ -212,14 +212,11 @@
     <div class="decorative-pattern"></div>
 
     <!-- Content Section -->
-    <!-- Content Section -->
     <div class="content-container">
         <h1>Upload Data for Retraining</h1>
-        <p>
-            Upload a dataset in CSV format.
-            The uploaded data will be used for retraining the diabetes prediction model.
-        </p>
-        <form action="/upload_data/" method="post" enctype="multipart/form-data">
+        <p>Upload a dataset in CSV format. The uploaded data will be used for retraining the diabetes prediction model.</p>
+        
+        <form id="uploadForm" enctype="multipart/form-data">
             <input type="file" name="file" accept=".csv" required>
             <input type="checkbox" id="retrain" name="retrain" value="True">
             <label for="retrain">Trigger model retraining after upload</label>
@@ -227,40 +224,32 @@
             <input type="submit" value="Upload">
         </form>
 
-        <!-- Displaying success or error message -->
-        {% if message %}
-            <div class="message success">
-                <strong>Success:</strong> {{ message }}
-            </div>
-        {% endif %}
-        
-        {% if error %}
-            <div class="message error">
-                <strong>Error:</strong> {{ error }}
-            </div>
-        {% endif %}
+        <div id="responseMessage"></div>
     </div>
 
-
     <script>
-        // Toggle Menu for Mobile
-        function toggleMenu() {
-            const navbarLinks = document.querySelector('.navbar-links');
-            navbarLinks.classList.toggle('active');
-        }
+        document.getElementById("uploadForm").addEventListener("submit", async function(event) {
+            event.preventDefault(); 
 
-        // Highlight Active Page
-        document.addEventListener("DOMContentLoaded", function () {
-            const currentPath = window.location.pathname; // Get current page path
-            const navLinks = document.querySelectorAll(".navbar-links a");
+            const formData = new FormData(this);
+            const responseMessage = document.getElementById("responseMessage");
+            responseMessage.innerHTML = ""; 
 
-            navLinks.forEach(link => {
-                if (link.getAttribute("href") === currentPath) {
-                    link.classList.add("active");
-                } else {
-                    link.classList.remove("active");
+            try {
+                const response = await fetch("/upload_data/", {
+                    method: "POST",
+                    body: formData,
+                });
+
+                const result = await response.json();
+                if (result.message) {
+                    responseMessage.innerHTML = `<div class="success">${result.message}</div>`;
+                } else if (result.error) {
+                    responseMessage.innerHTML = `<div class="error">${result.error}</div>`;
                 }
-            });
+            } catch (error) {
+                responseMessage.innerHTML = `<div class="error">Error: ${error.message}</div>`;
+            }
         });
     </script>
 </body>
