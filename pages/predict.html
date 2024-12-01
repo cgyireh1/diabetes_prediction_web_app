@@ -97,7 +97,6 @@
             border-radius: 15px;
             color: #fff;
             position: relative;
-            text-align: center;
             z-index: 1;
         }
 
@@ -138,12 +137,15 @@
         .results-container {
             margin-top: 30px;
             font-size: 20px;
-            text-align: center;
             display: none;
             padding: 20px;
             background-color: rgba(4, 94, 92, 0.8);
             border-radius: 10px;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-container h1, h2 {
+            text-align: center;
         }
 
         .results-container .positive { color: #e74c3c; font-size: 22px; font-weight: bold; }
@@ -223,14 +225,19 @@
             });
         });
 
-        // Handling the form submission
+        // Handling the form submission for prediction
         document.getElementById("predictForm").addEventListener("submit", function(event) {
             event.preventDefault();
-            // Retrieve form values and create a payload for prediction
+
+            // Retrieve form data and create a payload
             const formData = new FormData(event.target);
             const data = Object.fromEntries(formData.entries());
 
-            fetch("/predict", {
+            // Log the data to check if it's being captured correctly
+            console.log("Form Data:", data);
+
+            // Send the data to the FastAPI backend for prediction
+            fetch("/predict/", {
                 method: "POST",
                 body: JSON.stringify(data),
                 headers: {
@@ -239,14 +246,23 @@
             })
             .then(response => response.json())
             .then(data => {
-                const result = data.prediction === "positive" ? "Diabetes Detected" : "No Diabetes";
-                const resultClass = data.prediction === "positive" ? "positive" : "negative";
+                // Now using the correct response key: "Prediction"
+                const result = data.Prediction || "Prediction failed. Please try again.";
+                const resultClass = result.includes("Diabetic") ? "positive" : "negative";
+
+                // Display the result in the result container
                 document.getElementById("predictionText").textContent = result;
                 document.getElementById("result").classList.add(resultClass);
                 document.getElementById("result").style.display = "block";
             })
-            .catch(error => console.error("Error during prediction:", error));
+            .catch(error => {
+                // Log any network or fetch errors
+                console.error("Error during prediction:", error);
+                document.getElementById("predictionText").textContent = "Error: Unable to connect to server.";
+                document.getElementById("result").style.display = "block";
+            });
         });
+
     </script>
 </body>
 </html>

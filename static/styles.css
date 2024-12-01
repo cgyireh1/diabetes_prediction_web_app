@@ -167,7 +167,7 @@ section {
 
 .visualization {
     position: absolute;
-    width: 430px; 
+    width: 400px; 
     height: auto;
     transition: transform 0.3s ease-in-out;
 }
