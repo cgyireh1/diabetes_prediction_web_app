@@ -6,19 +6,8 @@
     <title>Diabetes Prediction</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <style>
-        /* Global box-sizing for consistent spacing */
-        *, *::before, *::after {
-            box-sizing: border-box;
-        }
+        *, *::before, *::after { box-sizing: border-box; }
 
-        /* html, body {
-            height: 100%;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            flex-direction: column;
-        } */
-        
         body {
             font-family: 'Arial', sans-serif;
             margin: 0;
@@ -28,7 +17,6 @@
             background-attachment: fixed;
         }
 
-        /* Navbar Styles */
         .navbar {
             background-color: #2b3238;
             padding: 20px 20px;
@@ -60,9 +48,7 @@
             padding: 0;
         }
 
-        .navbar-links li {
-            margin: 0 15px;
-        }
+        .navbar-links li { margin: 0 15px; }
 
         .navbar-links a {
             color: #fff;
@@ -76,13 +62,11 @@
             font-weight: bold;
         }
 
-        /* Mobile Responsiveness */
         @media (max-width: 768px) {
             .navbar-links {
                 flex-direction: column;
                 display: none;
             }
-
             .navbar-links.active {
                 display: flex;
                 background-color: rgba(4, 78, 121, 0.9);
@@ -93,7 +77,6 @@
                 padding: 10px;
                 border-radius: 0 0 10px 10px;
             }
-
             .navbar-toggle {
                 display: block;
                 background: none;
@@ -104,65 +87,6 @@
             }
         }
 
-        /* For Desktop */
-        .navbar-toggle {
-            display: none;
-        }
-
-        /* Mobile Responsiveness */
-        @media (max-width: 768px) {
-            .navbar-links {
-                flex-direction: column;
-                display: none;
-            }
-
-            .navbar-links.active {
-                display: flex;
-                background-color: rgba(4, 78, 121, 0.9);
-                position: absolute;
-                top: 50px;
-                left: 0;
-                width: 100%;
-                padding: 10px;
-                border-radius: 0 0 10px 10px;
-            }
-
-            .navbar-toggle {
-                display: block;
-                background: none;
-                border: none;
-                font-size: 30px;
-                color: #fff;
-                cursor: pointer;
-            }
-        }
-
-        /* For Desktop */
-        .navbar-toggle {
-            display: none;
-        }
-
-        /* Decorative Pattern in background */
-        .decorative-pattern {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;  
-            background: url('https://www.transparenttextures.com/patterns/black-felt.png') repeat;
-            z-index: -1;
-        }
-
-        /* Header Styles */
-        
-        h1 {
-            text-align: center;
-            margin-top: 40px;
-            font-size: 36px;
-            color: #a6cbf3;
-        }
-
-        /* Form Container Styles */
         .form-container {
             width: 80%;
             max-width: 600px;
@@ -176,17 +100,13 @@
             z-index: 1;
         }
 
-        /* Form Element Styles */
         label {
             font-size: 18px;
             margin-bottom: 10px;
             display: block;
         }
 
-        input[type="text"],
-        input[type="number"],
-        select,
-        input[type="submit"] {
+        input[type="text"], input[type="number"], select, input[type="submit"] {
             width: 100%;
             padding: 14px;
             margin-bottom: 20px;
@@ -197,9 +117,7 @@
             outline: none;
         }
 
-        input[type="text"],
-        input[type="number"],
-        select {
+        input[type="text"], input[type="number"], select {
             background-color: #f0f7ff;
             color: #333;
         }
@@ -212,138 +130,41 @@
             transition: background-color 0.3s ease-in-out;
         }
 
-        input[type="submit"]:hover {
-            background-color: #218838;
-        }
+        input[type="submit"]:hover { background-color: #218838; }
 
-        input::placeholder {
-            color: #aaa;
-        }
+        input:focus { border: 2px solid #4b76a5; background-color: #e9f6ff; }
 
-        input:focus {
-            border: 2px solid #4b76a5;
-            background-color: #e9f6ff;
-        }
-
-        /* Additional Form Heading */
-        .form-container h2 {
-            text-align: center;
-            font-size: 28px;
-            margin-bottom: 30px;
-        }
-
-        /* Results Section */
         .results-container {
             margin-top: 30px;
             font-size: 20px;
             text-align: center;
             display: none;
             padding: 20px;
-            background-color: #48047580; /* Semi-transparent background */
+            background-color: #48047580;
             border-radius: 10px;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         }
 
-        .results-container .positive {
-            color: #e74c3c;
-            font-size: 22px;
-            font-weight: bold;
-        }
+        .results-container .positive { color: #e74c3c; font-size: 22px; font-weight: bold; }
+        .results-container .negative { color: #2ecc71; font-size: 22px; font-weight: bold; }
 
-        .results-container .negative {
-            color: #2ecc71;
-            font-size: 22px;
-            font-weight: bold;
-        }
-        /* Navbar Toggle Button */
-        .navbar-toggle {
-            display: none;
-            background: none;
-            border: none;
-            font-size: 30px;
-            color: #fff;
-            cursor: pointer;
-        }
-
+        .navbar-toggle { display: none; }
         @media (max-width: 768px) {
-            .navbar-toggle {
-                display: block;
-            }
+            .form-container { padding: 20px; }
+            input[type="text"], input[type="number"], select, input[type="submit"] { padding: 10px; }
+            label { font-size: 16px; }
         }
-
-        /* Footer section */
-        footer {
-            background-color: #2b3238;
-            color: #fff;
-            padding: 40px 20px;
-            text-align: center;
-        }
-
-        footer .footer-branding h2 {
-            font-size: 30px;
-            margin-bottom: 10px;
-            color: #55b362;
-        }
-
-        footer .footer-branding p {
-            font-size: 20px;
-            color: #a0b3c7;
-        }
-
-        footer .footer-navigation a,
-        footer .footer-contact a {
-            color: #fff;
-            text-decoration: none;
-            font-size: 20px;
-            margin: 10px 20px;
-            transition: color 0.3s ease;
-
-        }
-        
-        .footer-contact {
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-            margin-bottom: 30px;
-            margin-top: 20px;
-        }
-
-        footer .footer-navigation a:hover,
-        footer .footer-contact a:hover {
-            color: #3498db;
-        }
-
-        footer .footer-social-links a {
-            margin:  10px;
-            font-size: 24px;
-            color: #fff;
-            transition: color 0.3s ease;
-        }
-
-        footer .footer-social-links a:hover {
-            color: #3498db;
-        }
-
-
     </style>
 </head>
 <body>
-    <!-- Navbar Section -->
-    <!-- Navbar Section -->
     <nav id="navbar" class="navbar">
         <div class="container">
-            <!-- Brand Logo -->
             <a href="/pages/pre-predict.html" class="navbar-brand">
-                <i class="fas fa-tint"></i> <!-- Blood drop icon -->
-                Diabetes Prediction
+                <i class="fas fa-tint"></i> Diabetes Prediction
             </a>
-
-            <!-- Hamburger Menu for Mobile -->
             <button class="navbar-toggle" onclick="toggleMenu()">
                 <i class="fas fa-bars"></i>
             </button>
-
-            <!-- Navbar Links -->
             <ul class="navbar-links">
                 <li><a href="/pages/index.html" class="nav-item"><i class="fas fa-home"></i> Home</a></li>
                 <li><a href="/pages/pre-predict.html" class="nav-item"><i class="fas fa-chart-line"></i> Make Prediction</a></li>
@@ -353,100 +174,72 @@
         </div>
     </nav>
 
-
-    <div class="decorative-pattern"></div>
-
     <div class="form-container">
         <h1>Diabetes Prediction</h1>
         <h2>Check Your Risk</h2>
         <form action="/predict" method="post">
             <label for="gender">Gender:</label>
             <input type="text" id="gender" name="gender" placeholder="Enter (e.g. Male or Female)" required>
-
             <label for="age">Age:</label>
             <input type="number" id="age" name="age" placeholder="Enter your age" required>
-
             <label for="hypertension">Hypertension:</label>
             <input type="number" id="hypertension" name="hypertension" placeholder="Enter 1 for Yes, 0 for No" required>
-
             <label for="heart_disease">Heart Disease:</label>
             <input type="number" id="heart_disease" name="heart_disease" placeholder="Enter 1 for Yes, 0 for No" required>
-
             <label for="bmi">BMI:</label>
-            <input type="number" id="bmi" name="bmi" placeholder="Enter (e.g. 25.3)" step="0.01" required>
-
+            <input type="number" id="bmi" name="bmi" placeholder="Enter BMI e.g. 25.3" required>
             <label for="HbA1c_level">HbA1c Level:</label>
-            <input type="number" id="HbA1c_level" name="HbA1c_level" placeholder="Enter (e.g. 5.6)" step="0.01" required>
-
+            <input type="number" id="HbA1c_level" name="HbA1c_level" placeholder="Enter HbA1c level e.g. 6.5" required>
             <label for="blood_glucose_level">Blood Glucose Level:</label>
-            <input type="number" id="blood_glucose_level" name="blood_glucose_level" placeholder="Enter (e.g. 100)" step="0.01" required>
-
+            <input type="number" id="blood_glucose_level" name="blood_glucose_level" placeholder="Enter blood glucose level e.g. 110" required>
             <label for="smoking_history">Smoking History:</label>
             <select id="smoking_history" name="smoking_history" required>
-                <option value="current">Current</option>
-                <option value="former">Former</option>
-                <option value="never">Never</option>
-                <option value="not_current">Not Current</option>
+                <option value="never">Never (you never smoked)</option>
+                <option value="current">Current (smoke currently)</option>
+                <option value="former">Former (use to smoke)</option>
+                <option value="ever">Ever (ever smoked)</option>
+                <option value="not current">Not Current (smokes but on a break)</option>
             </select>
-
-            <input type="submit" value="Predict">
+            <input type="submit" value="predict">
         </form>
-
-        <div class="results-label">Results:</div>
-        <div class="results-container" id="prediction-result"></div>
-
-        <p class="subheading">Fill in the details above and click Predict to check for diabetes.</p>
     </div>
 
-    <!-- Footer Section -->
-    <footer id="footer" class="footer-section">
-        <div class="footer-branding">
-            <h2>Diabetes Prediction</h2>
-            <p>Your trusted tool for diabetes prediction.</p>
-        </div>
-        <div class="footer-navigation">
-            <a href="/pages/index.html" class="footer-link"><i class="fas fa-home"></i> Home</a>
-            <a href="/pages/pre-predict.html" class="footer-link"><i class="fas fa-chart-line"></i> Make Prediction</a>
-            <a href="/pages/upload.html" class="footer-link"><i class="fas fa-upload"></i> Upload Data</a>
-            <a href="/pages/retrain.html" class="footer-link"><i class="fas fa-sync-alt"></i> Retrain Model</a>
-        </div>
-        <div class="footer-contact">
-            <a href="mailto:support@db-pred.com" class="footer-contact-link">
-                <i class="fas fa-envelope"></i> support@db-pred.com
-            </a>
-            <a href="tel:+1234567890" class="footer-contact-link">
-                <i class="fas fa-phone-alt"></i> +1 234 567 890
-            </a>
-        </div>
-        <div class="footer-social-links">
-            <a href="https://facebook.com" class="footer-social-link"><i class="fab fa-facebook-f"></i></a>
-            <a href="https://twitter.com" class="footer-social-link"><i class="fab fa-twitter"></i></a>
-            <a href="https://linkedin.com" class="footer-social-link"><i class="fab fa-linkedin-in"></i></a>
-        </div>
-    </footer>
+    <div id="result" class="results-container">
+        <p>Prediction result:</p>
+        <p id="predictionText"></p>
+    </div>
 
+    
 
     <script>
-        // Display the result dynamically
-        function showPredictionResult(isDiabetic) {
-            const resultElement = document.getElementById("prediction-result");
-            resultElement.style.display = "block";
-            resultElement.innerHTML = isDiabetic
-                ? "<p class='positive'>Stay strong, consult a doctor for a proper treatment plan 🫶</p>"
-                : "<p class='negative'>Congratulations! You do not have diabetes. Keep up the healthy lifestyle! 🎉</p>";
-        }
-
-
         function toggleMenu() {
             const navbarLinks = document.querySelector('.navbar-links');
             navbarLinks.classList.toggle('active');
         }
+        const response = await fetch('http://127.0.0.1:8000/predict/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+        });
 
 
-        // Test the function
-        // Uncomment to simulate a test result
-        // showPredictionResult(true);
-        // showPredictionResult(false);
+        function showPredictionResult(prediction) {
+            const resultContainer = document.getElementById('result');
+            const predictionText = document.getElementById('predictionText');
+            
+            if (prediction === 'positive') {
+                predictionText.textContent = 'Diabetic. You should consult a doctor for a proper treatment plan 🫶';
+                predictionText.classList.add('positive');
+                predictionText.classList.remove('negative');
+            } else {
+                predictionText.textContent = 'Non-Diabetes, You do not have diabetes. Keep up the healthy lifestyle! 🎉';
+                predictionText.classList.add('negative');
+                predictionText.classList.remove('positive');
+            }
+            resultContainer.style.display = 'block';
+        }
     </script>
 </body>
 </html>

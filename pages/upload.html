@@ -171,6 +171,23 @@
         input[type="submit"]:hover {
             background-color: #218838;
         }
+
+        /* Message Styles */
+        .message {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 5px;
+        }
+
+        .success {
+            background-color: #d4edda;
+            color: #155724;
+        }
+
+        .error {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
     </style>
 </head>
 <body>
@@ -193,18 +210,37 @@
     </nav>
 
     <div class="decorative-pattern"></div>
+
+    <!-- Content Section -->
     <!-- Content Section -->
     <div class="content-container">
         <h1>Upload Data for Retraining</h1>
         <p>
             Upload a dataset in CSV format.
-            The uploaded data will be used for retraining the diabetes prediction model. 
+            The uploaded data will be used for retraining the diabetes prediction model.
         </p>
-        <form action="/upload" method="post" enctype="multipart/form-data">
+        <form action="/upload_data/" method="post" enctype="multipart/form-data">
             <input type="file" name="file" accept=".csv" required>
+            <input type="checkbox" id="retrain" name="retrain" value="True">
+            <label for="retrain">Trigger model retraining after upload</label>
+            <br><br>
             <input type="submit" value="Upload">
         </form>
+
+        <!-- Displaying success or error message -->
+        {% if message %}
+            <div class="message success">
+                <strong>Success:</strong> {{ message }}
+            </div>
+        {% endif %}
+        
+        {% if error %}
+            <div class="message error">
+                <strong>Error:</strong> {{ error }}
+            </div>
+        {% endif %}
     </div>
+
 
     <script>
         // Toggle Menu for Mobile
