@@ -36,7 +36,7 @@ encoder_path = "models/encoder.pkl"
 predictor = DataPrediction(model_path=model_path, scaler_path=scaler_path, encoder_path=encoder_path)
 
 # Path for the retraining logs
-LOG_FILE_PATH = "static/logs/retraining_log.json"
+LOG_FILE_PATH = "logs/retraining_log.json"
 
 #  the uploaded file
 def save_uploaded_file(upload_file: UploadFile, destination: str):
@@ -92,22 +92,23 @@ async def upload_page(request: Request):
 
 # Data Upload Endpoint
 @app.post("/upload_data/")
-async def upload_data(request: Request, file: UploadFile = File(...), retrain: bool = False):
+async def upload_data(file: UploadFile = File(...), retrain: str = Form("false")):
+    retrain = retrain.lower() == "true"  # Convert string to boolean
     message = ""
     error = ""
 
     try:
         # Ensure directories exist
-        os.makedirs(os.path.dirname(f"static/uploads/"), exist_ok=True)
-        
+        os.makedirs(os.path.dirname("static/uploads/"), exist_ok=True)
+
         # Save the uploaded file with a timestamp to avoid overwriting
         file_location = f"static/uploads/{datetime.now().strftime('%Y%m%d%H%M%S')}_{file.filename}"
         with open(file_location, "wb") as f:
             f.write(file.file.read())
 
-        # Validate file structure (e.g., CSV or other supported file types)
+        # Validate file structure
         data_preprocessor = DataPreprocessing(file_location)
-        if not data_preprocessor.validate_columns():  # Assuming validate_columns method checks for expected columns
+        if not data_preprocessor.validate_columns():
             error = "Invalid file structure. Please check the columns in the uploaded file."
             return JSONResponse(content={"error": error}, status_code=400)
 
@@ -116,8 +117,8 @@ async def upload_data(request: Request, file: UploadFile = File(...), retrain: b
             retraining_log = {
                 "timestamp": pd.Timestamp.now().isoformat(),
                 "dataset_used": file.filename,
-                "model_path": model_path,  # Store path to model
-                "scaler_path": scaler_path  # Store path to scaler
+                "model_path": model_path,
+                "scaler_path": scaler_path,
             }
 
             # Ensure the logs directory exists
@@ -139,23 +140,20 @@ async def upload_data(request: Request, file: UploadFile = File(...), retrain: b
 
             # Perform retraining and save model
             model_pipeline = ModelPipeline()
-            data_preprocessor = DataPreprocessing(file_location)
             X, y = data_preprocessor.preprocess_data()
 
             # Retrain the model
             trained_model = model_pipeline.retrain_model(X, y)
 
             # Save the retrained model
-            model_path = model_pipeline.save_model(trained_model)
-
-            # Save the scaler
-            scaler_path = model_pipeline.save_scaler()
+            model_pipeline.save_model(trained_model)
+            model_pipeline.save_scaler()
 
         else:
             message = "File uploaded successfully, but retraining not triggered."
 
         return JSONResponse(content={"message": message})
-    
+
     except Exception as e:
         error = f"Error during file upload or retraining: {str(e)}"
         return JSONResponse(content={"error": error}, status_code=500)
