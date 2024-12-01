@@ -202,12 +202,16 @@
             </select>
             <input type="submit" value="Predict">
         </form>
+        <div id="result" class="results-container">
+            <p>Prediction result:</p>
+            <p id="predictionText"></p>
+        </div>
     </div>
 
-    <div id="result" class="results-container">
+    <!-- <div id="result" class="results-container">
         <p>Prediction result:</p>
         <p id="predictionText"></p>
-    </div>
+    </div> -->
 
     <script>
         function toggleMenu() {
@@ -237,10 +241,10 @@
                 resultContainer.style.display = 'block';
 
                 if (result.prediction === 'Diabetes') {
-                    predictionText.textContent = 'You have a high risk of having diabetes.';
+                    predictionText.textContent = 'Diabetic. You should consult a doctor for a proper treatment plan 🫶';
                     predictionText.className = 'positive';
                 } else {
-                    predictionText.textContent = 'You have a low risk of having diabetes.';
+                    predictionText.textContent = 'Non-Diabetes, You do not have diabetes. Keep up the healthy lifestyle! 🎉';
                     predictionText.className = 'negative';
                 }
             } catch (error) {
