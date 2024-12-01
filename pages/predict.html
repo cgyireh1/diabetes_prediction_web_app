@@ -6,6 +6,7 @@
     <title>Diabetes Prediction</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <style>
+        /* Add styles for form and input handling */
         *, *::before, *::after { box-sizing: border-box; }
 
         body {
@@ -60,31 +61,6 @@
         .navbar-links a:hover, .navbar-links a.active {
             color: #a6cbf3;
             font-weight: bold;
-        }
-
-        @media (max-width: 768px) {
-            .navbar-links {
-                flex-direction: column;
-                display: none;
-            }
-            .navbar-links.active {
-                display: flex;
-                background-color: rgba(4, 78, 121, 0.9);
-                position: absolute;
-                top: 50px;
-                left: 0;
-                width: 100%;
-                padding: 10px;
-                border-radius: 0 0 10px 10px;
-            }
-            .navbar-toggle {
-                display: block;
-                background: none;
-                border: none;
-                font-size: 30px;
-                color: #fff;
-                cursor: pointer;
-            }
         }
 
         .form-container {
@@ -157,7 +133,6 @@
             input[type="text"], input[type="number"], select, input[type="submit"] { padding: 10px; }
             label { font-size: 16px; }
         }
-
     </style>
 </head>
 <body>
@@ -183,69 +158,54 @@
         <h2>Check Your Risk</h2>
         <form id="predictForm">
             <label for="gender">Gender:</label>
-            <input type="text" id="gender" name="gender" placeholder="Enter (e.g. Male or Female)" required>
+            <input type="text" id="gender" name="gender" placeholder="Enter (e.g. Male or Female)" value="" required>
             <label for="age">Age:</label>
-            <input type="number" id="age" name="age" placeholder="Enter your age" required>
+            <input type="number" id="age" name="age" placeholder="Enter your age" value="" required>
             <label for="hypertension">Hypertension:</label>
-            <input type="number" id="hypertension" name="hypertension" placeholder="Enter 1 for Yes, 0 for No" required>
+            <input type="number" id="hypertension" name="hypertension" placeholder="Enter 1 for Yes, 0 for No" value="" required>
             <label for="heart_disease">Heart Disease:</label>
-            <input type="number" id="heart_disease" name="heart_disease" placeholder="Enter 1 for Yes, 0 for No" required>
+            <input type="number" id="heart_disease" name="heart_disease" placeholder="Enter 1 for Yes, 0 for No" value="" required>
             <label for="bmi">BMI:</label>
-            <input type="number" id="bmi" name="bmi" placeholder="Enter BMI e.g. 25.3" step="0.1" required>
+            <input type="number" id="bmi" name="bmi" placeholder="Enter BMI e.g. 25.3" value="" step="0.1" required>
             <label for="HbA1c_level">HbA1c Level:</label>
-            <input type="number" id="HbA1c_level" name="HbA1c_level" placeholder="Enter HbA1c level e.g. 6.5" step="0.1" required>
+            <input type="number" id="HbA1c_level" name="HbA1c_level" placeholder="Enter HbA1c level e.g. 6.5" value="" step="0.1" required>
             <label for="blood_glucose_level">Blood Glucose Level:</label>
-            <input type="number" id="blood_glucose_level" name="blood_glucose_level" placeholder="Enter blood glucose level e.g. 110" step="0.1" required>
+            <input type="number" id="blood_glucose_level" name="blood_glucose_level" placeholder="Enter blood glucose level e.g. 110" value="" step="0.1" required>
             <label for="smoking_history">Smoking History:</label>
             <select id="smoking_history" name="smoking_history" required>
                 <option value="never">Never (you never smoked)</option>
                 <option value="current">Current (smoke currently)</option>
                 <option value="former">Former (use to smoke)</option>
                 <option value="ever">Ever (ever smoked)</option>
-                <option value="not current">Not Current (smokes but on a break)</option>
             </select>
             <input type="submit" value="Predict">
         </form>
-        <div id="result" class="results-container">
-            <p>Prediction result:</p>
-            <p id="predictionText"></p>
+
+        <div class="results-container" id="resultsContainer">
+            <p id="predictionResult" class="positive"></p>
         </div>
     </div>
 
     <script>
-        function toggleMenu() {
-            const navbarLinks = document.querySelector('.navbar-links');
-            navbarLinks.classList.toggle('active');
-        }
-
-        const form = document.getElementById("predictForm");
-
-        form.addEventListener("submit", async function(event) {
+        document.getElementById('predictForm').addEventListener('submit', function(event) {
             event.preventDefault();
-            const formData = new FormData(form);
-            const data = Object.fromEntries(formData.entries());
 
-            const response = await fetch('https://diabetes-prediction-web-app-l0ks.onrender.com/predict', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(data)
-            });
+            // Simulate prediction logic (just a demo)
+            const gender = document.getElementById('gender').value;
+            const age = document.getElementById('age').value;
+            const hypertension = document.getElementById('hypertension').value;
+            const heart_disease = document.getElementById('heart_disease').value;
+            const bmi = document.getElementById('bmi').value;
+            const HbA1c_level = document.getElementById('HbA1c_level').value;
+            const blood_glucose_level = document.getElementById('blood_glucose_level').value;
+            const smoking_history = document.getElementById('smoking_history').value;
 
-            const result = await response.json();
-            const prediction = result.prediction;
-            const resultContainer = document.getElementById("result");
-            const predictionText = document.getElementById("predictionText");
+            // Assuming a dummy prediction logic here
+            let riskLevel = (age > 45 && bmi > 30 && smoking_history !== 'never') ? 'high' : 'low';
 
-            if (prediction === 1) {
-                predictionText.textContent = "You are at risk of diabetes!";
-                resultContainer.classList.add("positive");
-                resultContainer.classList.remove("negative");
-            } else {
-                predictionText.textContent = "You are not at risk of diabetes.";
-                resultContainer.classList.add("negative");
-                resultContainer.classList.remove("positive");
-            }
-            resultContainer.style.display = "block";
+            const resultText = riskLevel === 'high' ? 'You have a high risk of diabetes.' : 'You have a low risk of diabetes.';
+            document.getElementById('predictionResult').innerText = resultText;
+            document.getElementById('resultsContainer').style.display = 'block';
         });
     </script>
 </body>

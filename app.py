@@ -157,12 +157,12 @@ async def upload_data(file: UploadFile = File(...), retrain: str = Form("false")
             model_pipeline.save_scaler()
 
         else:
-            message = "File uploaded successfully, but retraining not triggered."
+            message = "File uploaded successfully"
 
         return JSONResponse(content={"message": message})
 
     except Exception as e:
-        error = f"Error during file upload or retraining: {str(e)}"
+        error = f"Error: {str(e)}"
         return JSONResponse(content={"error": error}, status_code=500)
 
 
