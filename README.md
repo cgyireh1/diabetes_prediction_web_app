@@ -107,4 +107,3 @@ This will start the server locally at http://localhost:8000.
 - Frontend Repo
 https://github.com/cgyireh1/diabetes_prediction_web_app
 
-- Video url:  

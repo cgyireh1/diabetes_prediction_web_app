@@ -204,12 +204,14 @@
             Upload a dataset in CSV format.
             The uploaded data will be used for retraining the diabetes prediction model.
         </p>
-        <form action="/upload_data/" method="post" enctype="multipart/form-data" id="uploadForm">
-            <input type="file" name="file" accept=".csv" required>
-            <input type="checkbox" id="retrain" name="retrain" value="true">
-            <label for="retrain">Trigger model retraining after upload</label>
+        <form action="/upload_data/" method="post" enctype="multipart/form-data">
+            <label for="file">Choose a CSV file:</label>
+            <input type="file" id="file" name="file" accept=".csv" required>
             <br><br>
-            <input type="submit" value="Upload">
+            <label for="retrain">Trigger retraining:</label>
+            <input type="checkbox" id="retrain" name="retrain" value="true">
+            <br><br>
+            <button type="submit">Upload</button>
         </form>
     </div>
 

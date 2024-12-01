@@ -164,6 +164,7 @@ async def upload_data(file: UploadFile = File(...), retrain: str = Form("false")
         error = f"Error during file upload or retraining: {str(e)}"
         return JSONResponse(content={"error": error}, status_code=500)
 
+
 # Retrain Model Page
 @app.get("/retrain/", response_class=HTMLResponse)
 async def retrain_page(request: Request):
