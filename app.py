@@ -74,15 +74,21 @@ async def predict(request: PredictionRequest):
     }])
 
     try:
+        print(f"Received data: {new_data}")  # Log the data received
+        
         prediction_result = predictor.predict_single(new_data)
-        if prediction_result == 1:
+        
+        # Log the prediction result for debugging
+        print(f"Prediction result: {prediction_result}")
 
+        if prediction_result == 1:
             prediction_message = "Diabetic. You should consult a doctor for a proper treatment plan 🫶."
         else:
             prediction_message = "Non-Diabetes, You do not have diabetes. Keep up the healthy lifestyle! 🎉"
         
         return {"Prediction": prediction_message}
     except Exception as e:
+        print(f"Error occurred: {str(e)}")
         return {"error": f"An error occurred: {str(e)}"}
     
 # Data Upload Page

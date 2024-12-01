@@ -214,55 +214,39 @@
 
     <script>
         function toggleMenu() {
-            const menu = document.querySelector(".navbar-links");
-            menu.classList.toggle("active");
+            const navbarLinks = document.querySelector('.navbar-links');
+            navbarLinks.classList.toggle('active');
         }
 
-        // Hide the result container when the user starts a new prediction
-        document.querySelectorAll('input, select').forEach(input => {
-            input.addEventListener('focus', () => {
-                document.getElementById("result").style.display = "none";
-            });
-        });
+        const form = document.getElementById("predictForm");
 
-        // Handling the form submission for prediction
-        document.getElementById("predictForm").addEventListener("submit", function(event) {
+        form.addEventListener("submit", async function(event) {
             event.preventDefault();
-
-            // Retrieve form data and create a payload
-            const formData = new FormData(event.target);
+            const formData = new FormData(form);
             const data = Object.fromEntries(formData.entries());
 
-            // Log the data to check if it's being captured correctly
-            console.log("Form Data:", data);
-
-            // Send the data to the FastAPI backend for prediction
-            fetch("/predict/", {
-                method: "POST",
-                body: JSON.stringify(data),
-                headers: {
-                    "Content-Type": "application/json"
-                }
-            })
-            .then(response => response.json())
-            .then(data => {
-                // Now using the correct response key: "Prediction"
-                const result = data.Prediction || "Prediction failed. Please try again.";
-                const resultClass = result.includes("Diabetic") ? "positive" : "negative";
-
-                // Display the result in the result container
-                document.getElementById("predictionText").textContent = result;
-                document.getElementById("result").classList.add(resultClass);
-                document.getElementById("result").style.display = "block";
-            })
-            .catch(error => {
-                // Log any network or fetch errors
-                console.error("Error during prediction:", error);
-                document.getElementById("predictionText").textContent = "Error: Unable to connect to server.";
-                document.getElementById("result").style.display = "block";
+            const response = await fetch('https://diabetes-prediction-web-app-l0ks.onrender.com/predict', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
             });
-        });
 
+            const result = await response.json();
+            const prediction = result.prediction;
+            const resultContainer = document.getElementById("result");
+            const predictionText = document.getElementById("predictionText");
+
+            if (prediction === 1) {
+                predictionText.textContent = "You are at risk of diabetes!";
+                resultContainer.classList.add("positive");
+                resultContainer.classList.remove("negative");
+            } else {
+                predictionText.textContent = "You are not at risk of diabetes.";
+                resultContainer.classList.add("negative");
+                resultContainer.classList.remove("positive");
+            }
+            resultContainer.style.display = "block";
+        });
     </script>
 </body>
 </html>
