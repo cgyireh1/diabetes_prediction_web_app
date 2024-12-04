@@ -652,14 +652,14 @@ label {
 
 .description {
     position: absolute;
-    bottom: -80px; 
+    bottom: -50px; 
     left: 50%;
     transform: translateX(-50%);
     color: rgb(245, 244, 244);
     font-weight: bold;
-    font-size: 19px;
+    font-size: 15px;
     text-align: center;
-    padding: 10px;
+    padding: 5px;
     background: var(--primary-color);
     border-radius: 10px;
     width: 100%;

@@ -26,10 +26,10 @@ export default function RetrainModel() {
     setRetrainResults(null);
 
     const formData = new FormData();
-    formData.append("data-file", file);
+    formData.append("file", file);
 
     try {
-      const response = await fetch("https://diabetes-prediction-web-app-l0ks.onrender.com//retrain-model", {
+      const response = await fetch("https://diabetes-prediction-web-app-l0ks.onrender.com/retrain-model", {
         method: "POST",
         body: formData,
       });

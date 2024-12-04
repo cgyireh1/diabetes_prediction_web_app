@@ -26,7 +26,7 @@ export default function Visualization(){
           
             <div className="visualization">
                 <img src={chart3} alt="HbA1c Level Distribution" />
-                <div className="description">HbA1c Levels Distribution</div>
+                <div className="description">Distribution Of HbA1c Levels by diabetes</div>
             </div>
         </div>
     </section>
