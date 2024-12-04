@@ -54,7 +54,7 @@ diabetes_prediction-ML_Pipeline_Summative/
 
 The web application is deployed and can be accessed at:
 
-- **Live Web App URL**: [https://diabetes-prediction-web-app-l0ks.onrender.com](https://diabetes-prediction-web-app-l0ks.onrender.com)
+- **Live Web App URL**: [https://diabetes-prediction-web-app-l0ks.onrender.com/](https://diabetes-prediction-web-app-l0ks.onrender.com)
 
 ---
 

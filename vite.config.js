@@ -6,19 +6,19 @@ export default defineConfig({
   server: {
     proxy: {
       '/upload': {
-        target: 'http://localhost:8000',
+        target: 'https://diabetes-prediction-web-app-l0ks.onrender.com/',
         changeOrigin: true,
         secure: false,
       },
 
       '/predict': {
-        target: 'http://localhost:8000',
+        target: 'https://diabetes-prediction-web-app-l0ks.onrender.com/',
         changeOrigin: true,
         secure: false,
       },
 
       '/retrain-model': {
-        target: 'http://localhost:8000',
+        target: 'https://diabetes-prediction-web-app-l0ks.onrender.com/',
         changeOrigin: true,
         secure: false,
       },
