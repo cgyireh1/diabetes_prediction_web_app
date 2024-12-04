@@ -10,19 +10,16 @@ export default defineConfig({
         changeOrigin: true,
         secure: false,
       },
-
       '/predict': {
         target: 'https://diabetes-prediction-web-app-l0ks.onrender.com/',
         changeOrigin: true,
         secure: false,
       },
-
       '/retrain-model': {
         target: 'https://diabetes-prediction-web-app-l0ks.onrender.com/',
         changeOrigin: true,
         secure: false,
       },
-
     },
   },
 });
