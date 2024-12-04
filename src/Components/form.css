@@ -1,0 +1,105 @@
+*, *::before, *::after { box-sizing: border-box; }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            /* background: linear-gradient(to bottom right, #597f94, #2a3844); */
+            background-attachment: fixed;
+        }
+
+      
+
+        .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .form-container {
+            width: 80%;
+            max-width: 600px;
+            margin: 40px auto;
+            background: linear-gradient(to right, #2a4057, #417aa0);
+            padding: 40px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+            border-radius: 15px;
+            color: #fff;
+            position: relative;
+            z-index: 1;
+        }
+
+        .classification-report {
+            white-space: pre; 
+            font-family: monospace; 
+            background-color: #f9f9f9;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            overflow-x: auto;
+            color: #333;
+          }
+          
+            
+        label {
+            font-size: 18px;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        input[type="text"], input[type="number"], select, input[type="submit"] {
+            width: 100%;
+            padding: 14px;
+            margin-bottom: 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 10px;
+            box-sizing: border-box;
+            outline: none;
+        }
+
+        input[type="text"], input[type="number"], select {
+            background-color: #f0f7ff;
+            color: #333;
+        }
+
+        input[type="submit"] {
+            background-color: var(--primary-color);
+            color: #fff;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        input[type="submit"]:hover { background-color: var(--text-light); }
+
+        input:focus { border: 2px solid #4b76a5; background-color: #e9f6ff; }
+
+        .results-container {
+            margin-top: 30px;
+            font-size: 20px;
+            display: none;
+            padding: 20px;
+            background-color: var(--primary-color);
+            color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-container h1, h2 {
+            text-align: center;
+        }
+
+        .results-container .positive { color: #e74c3c; font-size: 22px; font-weight: bold; }
+        .results-container .negative { color: #2ecc71; font-size: 22px; font-weight: bold; }
+
+        .predict-section{
+            background-image: url("../../public/accurate-prediction.jpg");
+        }
+
+        .form-container h1{
+            color: #00abf0;
+        }
